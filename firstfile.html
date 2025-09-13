@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Adaptive Learning Management System</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		:root {
+			--primary: #4f8cff;
+			--primary-dark: #4a12f2;
+			--accent: #ffb347;
+			--accent-dark: #ff9800;
+			--bg-gradient: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+			--card-gradient: linear-gradient(120deg, #f8fafc 0%, #e0eafc 100%);
+			--shadow: 0 8px 32px rgba(44,62,80,0.12);
+			--radius: 1.2rem;
+			--text: #1a2233;
+			--muted: #6c7a89;
+			--success: #43e97b;
+			--danger: #ff5858;
+			--logo-gradient: linear-gradient(135deg, #4f8cff 0%, #ffb347 100%);
+			--logo-shadow: 0 4px 24px rgba(44,62,80,0.18);
+			--header-glow: 0 0 32px 8px #4f8cff44;
+        
+		body {
+			font-family: 'Roboto', Arial, sans-serif;
+			background: var(--bg-gradient);
+			margin: 0;
+			padding: 0;
+			color: var(--text);
+			min-height: 100vh;
+		}
+		header {
+			background: linear-gradient(90deg, var(--primary-dark) 60%, var(--primary) 100%);
+			color: #fff;
+			padding: 2.5rem 1rem 2.2rem 1rem;
+			text-align: center;
+			box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+			border-bottom-left-radius: var(--radius);
+			border-bottom-right-radius: var(--radius);
+			position: relative;
+			overflow: hidden;
+			z-index: 1;
+		}
+		header::after {
+			content: '';
+			position: absolute;
+			top: 0; right: 0; bottom: 0; left: 0;
+			background: radial-gradient(circle at 80% 20%, var(--accent) 0%, transparent 60%);
+			opacity: 0.18;
+			pointer-events: none;
+			z-index: 0;
+		}
+		.logo-container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 1.1rem;
+			margin-bottom: 0.7rem;
+			z-index: 2;
+			position: relative;
+		}
+		.logo-gradient {
+			background: var(--logo-gradient);
+			border-radius: 50%;
+			width: 64px;
+			height: 64px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: var(--logo-shadow);
+			font-size: 2.2rem;
+			color: #fff;
+			border: 3px solid rgba(218, 255, 8, 0.4);
+			animation: logo-spin 3s linear infinite alternate;
+		}
+		@keyframes logo-spin {
+			0% { box-shadow: 0 0 24px 0 #4f8cff44; }
+			100% { box-shadow: 0 0 48px 8px #ffb34744; }
+		}
+		.logo-text {
+			font-size: 2.1rem;
+			font-weight: 900;
+			letter-spacing: 2px;
+			color: #fff;
+			text-shadow: 0 2px 12px #2a5298cc, 0 1px 0 #fff8;
+			font-family: 'Roboto', Arial, sans-serif;
+			background: linear-gradient(90deg, #fff 60%, #ffb347 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+		header h1 {
+			margin: 0 0 0.5rem 0;
+			font-size: 2.8rem;
+			font-weight: 800;
+			letter-spacing: 1px;
+			text-shadow: 0 2px 8px rgba(44,62,80,0.10), 0 0 32px #4f8cff44;
+			z-index: 2;
+			position: relative;
+		}
+		.subtitle, header p {
+			margin: 0;
+			font-size: 1.25rem;
+			color: #e3eafc;
+			font-weight: 500;
+			text-shadow: 0 1px 8px #f115ee88;
+			z-index: 2;
+			position: relative;
+		}
+		main {
+			max-width: 1200px;
+			margin: 2.5rem auto;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 2.5rem;
+			padding: 0 1.5rem;
+		}
+		.card {
+			background: var(--card-gradient);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			padding: 2.2rem 2rem 2rem 2rem;
+			margin-bottom: 1rem;
+			transition: box-shadow 0.2s, transform 0.2s;
+			border: 1.5px solid #e3eafc;
+			position: relative;
+		}
+		.card:hover {
+			box-shadow: 0 12px 40px rgba(44,62,80,0.18);
+			transform: translateY(-4px) scale(1.01);
+			border-color: var(--primary);
+		}
+		.card h2 {
+			margin-top: 0;
+			font-size: 1.5rem;
+			color: var(--primary-dark);
+			font-weight: 700;
+			letter-spacing: 0.5px;
+		}
+		.upload-btn {
+				display: flex;
+				align-items: center;
+				gap: 0.7rem;
+				background: linear-gradient(90deg, var(--primary) 60%, var(--primary-dark) 100%);
+				color: #471919;
+				border: none;
+				border-radius: 0.7rem;
+				padding: 0.8rem 1.5rem;
+				font-size: 1.08rem;
+				font-weight: 600;
+				cursor: pointer;
+				margin-top: 1.2rem;
+				box-shadow: 0 2px 8px rgba(223, 101, 8, 0.08);
+				transition: background 0.2s, box-shadow 0.2s, transform 0.2s, filter 0.2s;
+				outline: none;
+				position: relative;
+				z-index: 2;
+			}
+			.upload-btn:active {
+				filter: brightness(0.95) saturate(1.2);
+				transform: scale(0.98);
+			}
+			.upload-btn:focus {
+				box-shadow: 0 0 0 3px #f7f30455, 0 2px 8px rgba(44,62,80,0.08);
+			}
+			.upload-btn[disabled], .upload-btn.disabled {
+				background: #b0bec5;
+				color: #fff;
+				cursor: not-allowed;
+				filter: grayscale(0.5);
+				opacity: 0.7;
+			}
+		}
+		.upload-btn:hover {
+			background: linear-gradient(90deg, var(--accent) 60%, var(--accent-dark) 100%);
+			color: #fff;
+			box-shadow: 0 4px 16px rgba(255,179,71,0.15);
+			transform: scale(1.03);
+		}
+		.section {
+			margin-bottom: 2.5rem;
+		}
+		.questions-list {
+			margin: 1.2rem 0 0 0;
+			padding: 0;
+			list-style: none;
+		}
+		.questions-list li {
+			background: linear-gradient(90deg, #f8fafc 60%, #e0eafc 100%);
+			margin-bottom: 0.7rem;
+			padding: 0.9rem 1.2rem;
+			border-radius: 0.6rem;
+			color: var(--primary-dark);
+			font-weight: 500;
+			box-shadow: 0 1px 4px rgba(44,62,80,0.04);
+		}
+		.recommendations {
+			display: flex;
+			flex-direction: column;
+			gap: 1.2rem;
+		}
+		.recommendation-card {
+			background: linear-gradient(90deg, #e3f2fd 60%, #f8fafc 100%);
+			border-left: 6px solid var(--primary);
+			padding: 1.1rem 1.2rem;
+			border-radius: 0.7rem;
+			font-weight: 500;
+			color: var(--primary-dark);
+			box-shadow: 0 1px 6px rgba(44,62,80,0.06);
+		}
+		.activity-log {
+			background: linear-gradient(90deg, #c8dd09 60%, #e0eafc 100%);
+			border-left: 6px solid #cddc39;
+			padding: 1.1rem 1.2rem;
+			border-radius: 0.7rem;
+			font-size: 1.02rem;
+			margin-top: 1.2rem;
+			max-height: 140px;
+			overflow-y: auto;
+			color: #7b8a3a;
+			box-shadow: 0 1px 6px rgba(205,220,57,0.08);
+		}
+		.progress-bar {
+			width: 100%;
+			background: linear-gradient(90deg, #e0e0e0 60%, #e3eafc 100%);
+			border-radius: 0.7rem;
+			margin: 1.2rem 0;
+			height: 22px;
+			overflow: hidden;
+			box-shadow: 0 1px 4px rgba(44,62,80,0.04);
+		}
+		.progress-bar-inner {
+			height: 100%;
+			background: linear-gradient(90deg, var(--primary) 60%, var(--accent) 100%);
+			width: 0%;
+			border-radius: 0.7rem;
+			transition: width 0.5s;
+			box-shadow: 0 1px 6px rgba(44,62,80,0.10);
+		}
+		@media (max-width: 900px) {
+			main {
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+			}
+			.logo-text {
+				font-size: 1.3rem;
+			}
+			header h1 {
+				font-size: 1.5rem;
+			}
+			.logo-gradient {
+				width: 44px;
+				height: 44px;
+				font-size: 1.2rem;
+			}
+		}
+	</style>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<header>
+		<h1><i class="fa-solid fa-graduation-cap"></i> Adaptive Learning Management System</h1>
+		<p>Create an intelligent study companion that personalizes the learning experience for individual students.</p>
+	<header>
+		<div class="logo-container">
+			<div class="logo-gradient">
+				<i class="fa-solid fa-graduation-cap"></i>
+			</div>
+			<span class="logo-text">AdaptiLearn</span>
+		</div>
+		<h1>Adaptive Learning Management System</h1>
+		<p class="subtitle">Create an intelligent study companion that personalizes the learning experience for individual students.</p>
+	</header>
+			<input type="file" id="fileInput" accept=".pdf,.txt" style="display:none">
+			<button class="upload-btn" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-upload"></i> Upload PDF/Text</button>
+			<div id="fileStatus" style="margin-top:1rem;color:#f81061;"></div>
+		</section>
+		<section class="card section" id="assessment-section">
+			<h2><i class="fa-solid fa-clipboard-question"></i> Automated Assessment Generation</h2>
+			<button class="upload-btn" id="generateAssessmentBtn"><i class="fa-solid fa-magic"></i> Generate Assessment</button>
+			<ul class="questions-list" id="questionsList"></ul>
+		</section>
+		<section class="card section" id="analytics-section">
+			<h2><i class="fa-solid fa-chart-line"></i> Performance Analytics</h2>
+			<canvas id="analyticsChart" height="180"></canvas>
+			<div class="progress-bar"><div class="progress-bar-inner" id="progressBar"></div></div>
+		</section>
+		<section class="card section" id="recommendations-section">
+			<h2><i class="fa-solid fa-lightbulb"></i> Personalized Study Recommendations</h2>
+			<div class="recommendations" id="recommendations"></div>
+		</section>
+		<section class="card section" id="activity-section">
+			<h2><i class="fa-solid fa-clock"></i> Live Activity Log</h2>
+			<div class="activity-log" id="activityLog"></div>
+		</section>
+	</main>
+	<script>
+	// Activity log helper
+	function logActivity(msg) {
+		const log = document.getElementById('activityLog');
+		const time = new Date().toLocaleTimeString();
+		log.innerHTML = `<div>[${time}] ${msg}</div>` + log.innerHTML;
+	}
+
+	// Document upload and analysis simulation
+	document.getElementById('fileInput').addEventListener('change', function(e) {
+		const file = e.target.files[0];
+		if (file) {
+			document.getElementById('fileStatus').textContent = `Uploaded: ${file.name}`;
+			logActivity(`File uploaded: ${file.name}`);
+			updateProgress(20);
+			// Simulate document analysis
+			setTimeout(() => {
+				document.getElementById('fileStatus').textContent += '\nAnalysis complete: Key topics identified.';
+				logActivity('Document analysis complete. Ready for assessment generation.');
+				updateProgress(30);
+			}, 1200);
+		}
+	});
+
+	// Assessment generation simulation
+	document.getElementById('generateAssessmentBtn').addEventListener('click', function() {
+		const questions = [
+			{ type: 'mcq', text: 'Which of the following best summarizes the main idea of the document?', options: ['A. Option 1', 'B. Option 2', 'C. Option 3', 'D. Option 4'] },
+			{ type: 'short', text: 'List three key points discussed in the document.' },
+			{ type: 'tf', text: 'True or False: The document emphasizes the importance of adaptive learning.' },
+			{ type: 'mcq', text: 'Which section covers the most recent research?', options: ['A. Introduction', 'B. Methods', 'C. Results', 'D. Discussion'] },
+			{ type: 'short', text: 'Summarize the implications of the main topic in your own words.' }
+		];
+		const list = document.getElementById('questionsList');
+		list.innerHTML = '';
+		questions.forEach((q, idx) => {
+			const li = document.createElement('li');
+			if (q.type === 'mcq') {
+				li.innerHTML = `<b>Q${idx+1} (MCQ):</b> ${q.text}<br>` +
+					q.options.map(opt => `<label><input type='radio' name='q${idx}'/> ${opt}</label>`).join('<br>');
+			} else if (q.type === 'short') {
+				li.innerHTML = `<b>Q${idx+1} (Short Answer):</b> ${q.text}<br><textarea rows='2' style='width:90%;margin-top:0.5em'></textarea>`;
+			} else if (q.type === 'tf') {
+				li.innerHTML = `<b>Q${idx+1} (True/False):</b> ${q.text}<br>` +
+					`<label><input type='radio' name='q${idx}'/> True</label> <label><input type='radio' name='q${idx}'/> False</label>`;
+			}
+			list.appendChild(li);
+		});
+		logActivity('Assessment generated with multiple question formats.');
+		updateProgress(50);
+	});
+
+	// Analytics chart (simulated data)
+	const ctx = document.getElementById('analyticsChart').getContext('2d');
+	const analyticsChart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+			datasets: [{
+				label: 'Score (%)',
+				data: [60, 72, 85, 90],
+				borderColor: '#1976d2',
+				backgroundColor: 'rgba(25,118,210,0.1)',
+				tension: 0.3,
+				pointRadius: 5,
+				pointBackgroundColor: '#1976d2',
+			}]
+		},
+		options: {
+			responsive: true,
+			plugins: {
+				legend: { display: false },
+			},
+			scales: {
+				y: { min: 0, max: 100, ticks: { stepSize: 20 } }
+			}
+		}
+	});
+	logActivity('Analytics dashboard loaded.');
+
+	// Progress bar update
+	function updateProgress(val) {
+		const bar = document.getElementById('progressBar');
+		bar.style.width = val + '%';
+		bar.setAttribute('aria-valuenow', val);
+		if (val >= 100) {
+			bar.style.background = 'linear-gradient(90deg, var(--success) 60%, var(--accent) 100%)';
+			logActivity('Congratulations! You have completed your learning goal.');
+		}
+	}
+	// Simulate adaptive progress
+	let progressVal = 10;
+	updateProgress(progressVal);
+	function adaptiveProgressStep(step) {
+		progressVal = Math.min(100, progressVal + step);
+		updateProgress(progressVal);
+	}
+
+	// Recommendations (simulated)
+	function showRecommendations() {
+		// Simulate adaptive recommendations based on progress
+		let recs = [];
+		if (progressVal < 30) {
+			recs = [
+				'Start by reviewing the uploaded material thoroughly.',
+				'Focus on understanding key concepts before moving to assessments.',
+				'Set a daily study goal to build consistency.'
+			];
+		} else if (progressVal < 70) {
+			recs = [
+				'Attempt the generated assessments to test your understanding.',
+				'Review incorrect answers and revisit those topics.',
+				'Try explaining concepts to a peer or in your own words.'
+			];
+		} else if (progressVal < 100) {
+			recs = [
+				'You are progressing well! Focus on advanced topics.',
+				'Take practice quizzes to reinforce your learning.',
+				'Prepare a summary sheet for quick revision.'
+			];
+		} else {
+			recs = [
+				'Excellent work! Maintain your knowledge with periodic reviews.',
+				'Help others by sharing your insights.',
+				'Explore new topics to expand your learning.'
+			];
+		}
+		const container = document.getElementById('recommendations');
+		container.innerHTML = '';
+		recs.forEach(r => {
+			const div = document.createElement('div');
+			div.className = 'recommendation-card';
+			div.innerHTML = `<i class='fa-solid fa-check-circle' style='color:#1976d2;margin-right:0.5rem;'></i>${r}`;
+			container.appendChild(div);
+		});
+		logActivity('Personalized recommendations updated.');
+	}
+	showRecommendations();
+
+	// Live tracking simulation (activity log updates)
+	setInterval(() => {
+		logActivity('System running smoothly.');
+	}, 15000);
+	</script>
+</body>
+</html>
